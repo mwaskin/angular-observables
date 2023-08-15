@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 /* RxJS is a JS Library, separate from Angular, for creating Observables */
 import { Subscription, interval, Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -41,21 +42,30 @@ export class HomeComponent implements OnInit, OnDestroy {
       }, 1000);
     });
 
-    this.firstObsSubscription = customIntervalObservable.subscribe(
-      /* handles the data passed from .next() */
-      (data) => {
-        console.log(data);
-      },
-      /* handles the err passed from .error() */
-      (error) => {
-        console.log(error);
-        alert(error.message);
-      },
-      /* handles anything that should happen if the Observable completes */
-      () => {
-        console.log('Completed!');
-      }
-    );
+    this.firstObsSubscription = customIntervalObservable
+      .pipe(
+        filter((data: number) => {
+          return data > 0;
+        }),
+        map((data: number) => {
+          return 'Round' + (data + 1);
+        })
+      )
+      .subscribe(
+        /* handles the data passed from .next() */
+        (data) => {
+          console.log(data);
+        },
+        /* handles the err passed from .error() */
+        (error) => {
+          console.log(error);
+          alert(error.message);
+        },
+        /* handles anything that should happen if the Observable completes */
+        () => {
+          console.log('Completed!');
+        }
+      );
   }
 
   ngOnDestroy(): void {
