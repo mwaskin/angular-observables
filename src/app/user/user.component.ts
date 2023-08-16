@@ -22,6 +22,7 @@ export class UserComponent implements OnInit {
   }
 
   onActivate() {
+    /* Subjects use .next() instead of .emit() to pass data to the subscription */
     this.userService.activatedEmitter.next(true);
     // this.userService.activatedEmitter.emit(true);
   }

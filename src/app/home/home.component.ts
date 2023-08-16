@@ -42,6 +42,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       }, 1000);
     });
 
+    /* 
+      - use Operators to manipulate data emitted from the Observable before passing it to the subscription handler functions
+      - use .pipe() that accepts unlimited operator arguments that execute callback functions to manipulate the data
+    */
     this.firstObsSubscription = customIntervalObservable
       .pipe(
         filter((data: number) => {
